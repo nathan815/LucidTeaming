@@ -8,6 +8,6 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 firebase.database = new firebase.firestore();
-firebase.database.settings({timestampInSnapshots: true});
+firebase.database.settings({timestampsInSnapshots: true});
 
 export default firebase;
