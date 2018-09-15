@@ -35,6 +35,13 @@ class SignUpForm extends React.Component {
     this.setState({
       error: null
     });
+    if (this.state.password !== this.state.confirmPassword) {
+      return this.setState({
+        error: {
+          message: "The passwords you provided didn't match!"
+        }
+      });
+    }
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password,)
       .then(authUser => {
         console.log('done')
@@ -69,7 +76,7 @@ class SignUpForm extends React.Component {
                    onChange={(e)=>this.setState({password:e.target.value})} required />
           </Row>
           <Row>
-            <Input s={12} label="Confirm Password" type="text" value={this.state.confirmPassword} 
+            <Input s={12} label="Confirm Password" type="password" value={this.state.confirmPassword} 
                    onChange={(e)=>this.setState({confirmPassword:e.target.value})} required />
           </Row>
           <Button>Sign Up</Button>
