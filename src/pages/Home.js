@@ -15,11 +15,8 @@ export default class Home extends React.Component {
 
           <div className="row">
             <div className="col s12 m6">
-              <Link to="/login" className="waves-effect waves-light btn-large cardFix">Login</Link>
+              <Link to="/login" className="waves-effect waves-light btn-large cardFix">Login or Register</Link>
             </div>  
-            <div className="col s12 m6">
-              <Link to="/register" className="waves-effect waves-light btn-large cardFix">Register</Link>
-            </div>
           </div>
 
 

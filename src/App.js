@@ -1,23 +1,35 @@
 import React, { Component } from 'react';
+import firebase from './firebase';
 
 import Navbar from './Navbar';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
-import Login from './pages/login'
+import Login from './pages/login';
+import Dashboard from './pages/Dashboard';
 import { Route, Redirect } from 'react-router-dom';
-
-
 
 class App extends Component {
   constructor(props) {
     super(props);
-  
+    
+    this.listenForAuth();
+
     this.state = {
       auth: {
         loggedIn: false,
-
+        user: {},
       }
     };
+  }
+  listenForAuth = () => {
+    firebase.auth().onAuthStateChanged(function(user) {
+      this.setState({
+        auth: {
+          isLoggedIn: !!user,
+          user: user,
+        }
+      });
+    });
   }
   render() {
     return (
@@ -28,6 +40,7 @@ class App extends Component {
           <Route path="/home" component={Home}/>
           <Route path="/login" component={Login}/>
           <Route path="/register" component={SignUp}/>
+          <Route path="/dashboard" component={Dashboard}/>
           <Route exact path="/" render={() => (
             !this.state.auth.loggedIn
             ?
