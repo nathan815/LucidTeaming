@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
-import Login from './pages/login'
+import Login from './pages/login';
+import Dashboard from './pages/Dashboard';
 import { Route, Redirect } from 'react-router-dom';
 
 
@@ -28,6 +29,7 @@ class App extends Component {
           <Route path="/home" component={Home}/>
           <Route path="/login" component={Login}/>
           <Route path="/register" component={SignUp}/>
+          <Route path="/dashboard" component={Dashboard}/>
           <Route exact path="/" render={() => (
             !this.state.auth.loggedIn
             ?
