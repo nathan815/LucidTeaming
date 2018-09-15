@@ -9,6 +9,11 @@ import Login from './pages/login'
 import { Route } from 'react-router-dom';
 
 
+document.addEventListener('DOMContentLoaded', function(){
+  let elems = document.querySelectorAll('.datepicker');
+  let instances = M.datepicker.init(elems);
+});
+
 class App extends Component {
   render() {
     return (
