@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-<<<<<<< HEAD
-import Login from './Components/login'
 
 import Navbar from './Navbar';
 import Home from './pages/Home';
 import Register from './pages/Register';
+import Login from './pages/login'
 import { Route } from 'react-router-dom';
 
 
@@ -18,6 +17,7 @@ class App extends Component {
         <Navbar />
         <div>
           <Route path="/dashboard" component={Home}/>
+          <Route path="/login" component={Login}/>
           <Route path="/register" component={Register}/>
         </div>
       </div>
