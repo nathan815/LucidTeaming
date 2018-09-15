@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Login from './pages/login';
 import Dashboard from './pages/Dashboard';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +22,8 @@ class App extends Component {
     };
   }
   listenForAuth = () => {
-    firebase.auth().onAuthStateChanged(function(user) {
+    console.log(this);
+    firebase.auth().onAuthStateChanged((user) => {
       this.setState({
         auth: {
           isLoggedIn: !!user,
@@ -30,6 +31,7 @@ class App extends Component {
         }
       });
     });
+    
   }
   render() {
     return (
@@ -37,16 +39,14 @@ class App extends Component {
       <div className="App">
         <Navbar auth={this.state.auth} />
         <div className="container">
-          <Route path="/home" component={Home}/>
           <Route path="/login" component={Login}/>
           <Route path="/register" component={SignUp}/>
-          <Route path="/dashboard" component={Dashboard}/>
           <Route exact path="/" render={() => (
-            !this.state.auth.loggedIn
+            this.state.auth.isLoggedIn
             ?
-              <Redirect to="/home"/>
+              <Dashboard />
             :
-              null //We need a route for when the user is logged in. e.g. a dashboard.
+              <Home />
           )
             
           }></Route>
