@@ -4,26 +4,32 @@ import './App.css';
 
 import Navbar from './Navbar';
 import Home from './pages/Home';
-import Register from './pages/Register';
+import SignUp from './pages/SignUp';
 import Login from './pages/login'
 import { Route } from 'react-router-dom';
 
 
-document.addEventListener('DOMContentLoaded', function(){
-  let elems = document.querySelectorAll('.datepicker');
-  let instances = M.datepicker.init(elems);
-});
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      auth: {
+        loggedIn: false,
+
+      }
+    };
+  }
   render() {
     return (
 
       <div className="App">
-        <Navbar />
-        <div>
+        <Navbar auth={this.state.auth} />
+        <div className="container">
           <Route path="/dashboard" component={Home}/>
           <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
+          <Route path="/register" component={SignUp}/>
         </div>
       </div>
 
@@ -31,7 +37,4 @@ class App extends Component {
   }
 }
 
-
-          // <Route path="/login" component={Login}/>
-          // <Route path="/register" component={Register}/>
 export default App;
