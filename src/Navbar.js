@@ -19,7 +19,7 @@ class Navbar extends React.Component {
                 ? (
                   <React.Fragment>
                     <li><Link to="/">Dashboard</Link></li>
-                    <li><a href="#" onClick={(e)=>this.logout(e)}>Logout</a></li>
+                    <li><button onClick={(e)=>this.logout(e)}>Logout</button></li>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
