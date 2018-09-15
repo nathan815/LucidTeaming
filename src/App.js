@@ -4,7 +4,7 @@ import firebase from './firebase';
 import Navbar from './Navbar';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
-import Login from './pages/login';
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import { Route } from 'react-router-dom';
 
@@ -42,13 +42,12 @@ class App extends Component {
           <Route path="/login" component={Login}/>
           <Route path="/register" component={SignUp}/>
           <Route exact path="/" render={() => (
-            this.state.auth.isLoggedIn
-            ?
-              <Dashboard />
-            :
-              <Home />
-          )
-            
+              this.state.auth.isLoggedIn
+              ?
+                <Dashboard />
+              :
+                <Home />
+            )
           }></Route>
         </div>
       </div>
