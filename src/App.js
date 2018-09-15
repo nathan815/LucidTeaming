@@ -16,9 +16,10 @@ class App extends Component {
 
     this.state = {
       auth: {
-        loggedIn: false,
+        loggedIn: true,
         user: {},
-      }
+      },
+      authenticated: false
     };
   }
 
@@ -34,6 +35,11 @@ class App extends Component {
 
   listenForAuth = () => {
     firebase.auth().onAuthStateChanged((user) => {
+      if (!this.state.authenticated) {
+        this.setState({
+          authenticated: true
+        });
+      }
       this.setState({
         auth: {
           isLoggedIn: !!user,
@@ -44,6 +50,9 @@ class App extends Component {
     
   }
   render() {
+
+    if (!this.state.authenticated) return null;
+
     return (
 
       <div className="App">
