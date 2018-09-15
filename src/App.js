@@ -16,7 +16,7 @@ class App extends Component {
 
     this.state = {
       auth: {
-        loggedIn: false,
+        loggedIn: true,
         user: {},
       }
     };
