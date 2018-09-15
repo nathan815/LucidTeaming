@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Login from './pages/login';
 import Dashboard from './pages/Dashboard';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +22,8 @@ class App extends Component {
     };
   }
   listenForAuth = () => {
-    firebase.auth().onAuthStateChanged(function(user) {
+    console.log(this);
+    firebase.auth().onAuthStateChanged((user) => {
       this.setState({
         auth: {
           isLoggedIn: !!user,
@@ -30,6 +31,7 @@ class App extends Component {
         }
       });
     });
+    
   }
   render() {
     return (
