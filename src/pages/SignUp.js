@@ -1,79 +1,85 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import { Input, Row, Button } from 'react-materialize';
+import firebase from '../firebase';
 
 const SignUpPage = (props) => {
   if(props.loggedIn) {
       return <Redirect to="/" />;
     }
   return (
-    <div classNameName="row">
-      <div classNameName="card-panel">
-        <h4>Sign Up</h4>
-        <SignUpForm />
-      </div>
+    <div>
+      <h4>Sign Up</h4>
+      <SignUpForm history={props.history} />
     </div>
   );
+};
+
+const INITIAL_STATE = {
+  firstName: '',
+  lastName: '',
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      password: '',
-    }
+    this.state = INITIAL_STATE;
   }
 
   onSubmit = (event) => {
-
+    event.preventDefault();
+    this.setState({
+      error: null
+    });
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password,)
+      .then(authUser => {
+        console.log('done')
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push('/');
+      })
+      .catch(error => {
+        this.setState({
+          error: error
+        });
+      });
+    console.log(this.state);
   }
   render() {
+    const error = this.state.error && <p className="red-text"><b>Error:</b> { this.state.error.message }</p>;
     return (
       <div className="row">
-        <form className="col s12" onSubmit={this.onSubmit}>
-          <div className="row">
-            <div className="input-field col s6">
-              <input type="text" id="first-name" value={this.state.username} 
-                      onChange={(e)=>this.setState({username:e.target.value})} />
-              <label for="first_name" id="first_name">First Name</label>
-            </div>
-            <div className="input-field col s6">
-              <input id="last_name" type="text" className="validate" />
-              <label for="last_name">Last Name</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input id="email" type="email" className="validate" />
-              <label for="email">Email</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <input id="password" type="password" className="validate" />
-              <label for="password">Password</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col s12">
-              This is an inline input field:
-              <div className="input-field inline">
-                <input id="email_inline" type="email" className="validate" />
-                <label for="email_inline">Email</label>
-                <span className="helper-text" data-error="wrong" data-success="right">Helper text</span>
-              </div>
-            </div>
-          </div>
+        { error }
+        <form className="col s12 auth-form" onSubmit={this.onSubmit}>
+          <Row>
+            <Input s={6} label="First Name" value={this.state.firstName} 
+                      onChange={(e)=>this.setState({firstName:e.target.value})} required />
+            <Input s={6} label="Last Name" value={this.state.lastName} 
+                      onChange={(e)=>this.setState({lastName:e.target.value})} required />
+          </Row>
+          <Row>
+            <Input s={12} label="Email Address" type="email" value={this.state.email} 
+                   onChange={(e)=>this.setState({email:e.target.value})} required />
+          </Row>
+          <Row>
+            <Input s={12} label="Password" type="password" value={this.state.password} 
+                   onChange={(e)=>this.setState({password:e.target.value})} required />
+          </Row>
+          <Row>
+            <Input s={12} label="Confirm Password" type="text" value={this.state.confirmPassword} 
+                   onChange={(e)=>this.setState({confirmPassword:e.target.value})} required />
+          </Row>
+          <Button>Sign Up</Button>
         </form>
       </div>
     );
   }
 }
 
-export default SignUpPage;
+export default withRouter(SignUpPage);
 
 export {
   SignUpForm,
