@@ -3,13 +3,15 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { Input, Row, Button } from 'react-materialize';
 import firebase from '../firebase';
 
+import '../css/login.css'  
+
 const SignUpPage = (props) => {
   if(props.loggedIn) {
       return <Redirect to="/" />;
     }
   return (
     <div>
-      <h4>Sign Up</h4>
+      <h1>Sign Up</h1>
       <SignUpForm history={props.history} />
     </div>
   );
@@ -86,7 +88,7 @@ class SignUpForm extends React.Component {
             <Input s={12} label="Confirm Password" type="password" value={this.state.confirmPassword} 
                    onChange={(e)=>this.setState({confirmPassword:e.target.value})} required />
           </Row>
-          <Button>Sign Up</Button>
+          <Button large>Sign Up</Button>
         </form>
       </div>
     );
