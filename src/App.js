@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -21,8 +21,18 @@ class App extends Component {
       }
     };
   }
+
+  logout = () => {
+    firebase.auth().signOut()
+      .then(() => {
+        window.Materialize.toast('You are now logged out.', 2000);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
   listenForAuth = () => {
-    console.log(this);
     firebase.auth().onAuthStateChanged((user) => {
       this.setState({
         auth: {
@@ -37,16 +47,12 @@ class App extends Component {
     return (
 
       <div className="App">
-        <Navbar auth={this.state.auth} />
+        <Navbar auth={this.state.auth} logout={this.logout} />
         <div className="container">
           <Route path="/login" component={Login}/>
           <Route path="/register" component={SignUp}/>
-          <Route exact path="/" render={() => (
-              this.state.auth.isLoggedIn
-              ?
-                <Dashboard />
-              :
-                <Home />
+          <Route exact path="/" render={() => ( 
+              this.state.auth.isLoggedIn ? <Dashboard /> : <Home /> 
             )
           }></Route>
         </div>
@@ -56,4 +62,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
