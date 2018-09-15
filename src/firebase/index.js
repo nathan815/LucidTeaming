@@ -7,5 +7,7 @@ import config from './config';
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
+firebase.database = new firebase.firestore();
+firebase.database.settings({timestampInSnapshots: true});
 
 export default firebase;
