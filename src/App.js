@@ -37,16 +37,14 @@ class App extends Component {
       <div className="App">
         <Navbar auth={this.state.auth} />
         <div className="container">
-          <Route path="/home" component={Home}/>
           <Route path="/login" component={Login}/>
           <Route path="/register" component={SignUp}/>
-          <Route path="/dashboard" component={Dashboard}/>
           <Route exact path="/" render={() => (
-            !this.state.auth.loggedIn
+            this.state.auth.isLoggedIn
             ?
-              <Redirect to="/home"/>
+              <Dashboard />
             :
-              null //We need a route for when the user is logged in. e.g. a dashboard.
+              <Home />
           )
             
           }></Route>
