@@ -1,13 +1,30 @@
 import React, { Component } from 'react';
 import firebase from './firebase';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 
+import AppLoading from './AppLoading';
 import Navbar from './Navbar';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
-import { Route, withRouter } from 'react-router-dom';
+
+const GuestRoute = ({ component: Component, ...restProps }) => (
+  <Route {...restProps} render={(props) => (
+    firebase.auth().currentUser
+      ? <Redirect to='/' />
+      : <Component {...props} />
+  )} />
+);
+
+const PrivateRoute = ({ component: Component, ...restProps }) => (
+  <Route {...restProps} render={(props) => (
+    firebase.auth().currentUser
+      ? <Component {...props} />
+      : <Redirect to='/login' />
+  )} />
+);
 
 class App extends Component {
   constructor(props) {
@@ -20,55 +37,51 @@ class App extends Component {
         loggedIn: true,
         user: {},
       },
-      authenticated: false
+      authenticated: false,
+      loading: true,
     };
   }
 
   logout = () => {
     firebase.auth().signOut()
       .then(() => {
-        window.Materialize.toast('You are now logged out.', 2000);
+        this.props.history.push('/');
       })
       .catch((err) => {
-        alert(err);
+        console.log(err);
       });
   }
 
   listenForAuth = () => {
     firebase.auth().onAuthStateChanged((user) => {
-      if (!this.state.authenticated) {
-        this.setState({
-          authenticated: true
-        });
-      }
       this.setState({
         auth: {
           isLoggedIn: !!user,
           user: user,
-        }
+        },
+        loading: false,
       });
     });
     
   }
   render() {
-
-    if (!this.state.authenticated) return null;
+    if(this.state.loading) {
+      return <AppLoading />;
+    }
 
     return (
-
       <div className="App">
         <Navbar auth={this.state.auth} logout={this.logout} />
         <div className="container">
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={SignUp}/>
           <Route path="/welcome" component={Welcome}/>
+          <GuestRoute path="/login" component={Login} />
+          <GuestRoute path="/register" component={SignUp} />
           <Route exact path="/" render={() => ( 
-              this.state.auth.isLoggedIn ? <Dashboard /> : <Home /> 
-            )
+            this.state.auth.isLoggedIn ? <Dashboard /> : <Home /> 
+          )
           }></Route>
         </div>
       </div>
-
     );
   }
 }
