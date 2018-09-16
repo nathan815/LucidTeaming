@@ -41,6 +41,10 @@ export default class MyProjects extends React.Component {
                                     <p>You don't have any projects!</p> //TODO: proper message or something.
                             }
                         </div>
+                        <div className="card-footer right">
+                            <Link to="/project">Create Project</Link>
+                        </div>
+
                     </div>
         );
     }

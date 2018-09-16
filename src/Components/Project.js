@@ -6,7 +6,7 @@ export default class Project extends React.Component {
 
     constructor (props) {
         super(props);
-        this.project = props.data;
+        // this.project = props.data;
     }
 
     render () {
