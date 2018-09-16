@@ -1,7 +1,9 @@
 import React from 'react';
 import firebase from '../firebase';
 import "../css/MyProjects.css";
+import {Modal} from 'react-materialize';
 import { Link } from 'react-router-dom';
+import Project from './Project';
 
 export default class MyProjects extends React.Component {
 
@@ -28,7 +30,12 @@ export default class MyProjects extends React.Component {
                                 this.state.projects.length
                                 ?
                                     this.state.projects.map(project => {
-                                        return <Link to="/project" key={`${project.name}-${project.createdAt}`}>{project.name}</Link>
+                                        return (
+                                            <Modal header={project.name} trigger={<Link to="#">{project.name}</Link>}>
+                                                <Project data={project}/>
+                                            </Modal>
+                                        )
+                                        //return <Link to="/project" key={`${project.name}-${project.createdAt}`}>{project.name}</Link>
                                     })
                                 :
                                     <p>You don't have any projects!</p> //TODO: proper message or something.
