@@ -33,14 +33,15 @@ export default class Welcome extends React.Component {
 
     this.onSubmit = async e => {
       e.preventDefault();
-      const userDataDB = firebase.database.collection("userData");
-      if (!userDataDB) return;
+      const userId = firebase.auth().currentUser.uid;
+      const userData = firebase.firestore().collection('userData').doc(userId);
 
-      const allData = (await userDataDB.get()).docs.map(doc => doc.data());
-      if (allData.find(({email}) => email === firebase.auth().currentUser.email)) return; //We already registered.
+      if(userData.languages && userData.age) {
+        return;
+      }
 
       try {
-        await userDataDB.add({
+        await userData.set({
           email: firebase.auth().currentUser.email,
           age: this.state.age,
           languages: this.selectedLanagages
@@ -54,16 +55,11 @@ export default class Welcome extends React.Component {
         registered: true
       });
 
-      
-
-      
     };
 
   }
 
   render() {
-
-    if (!firebase.auth().currentUser) return null; //TODO: REDIRECT.
 
     if (this.state.registered) return <Redirect to="/" />
 
