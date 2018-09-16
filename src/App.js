@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import { Route, withRouter } from 'react-router-dom';
+import Projects from "./pages/subdash/projects" 
 
 class App extends Component {
   constructor(props) {
@@ -60,6 +61,7 @@ class App extends Component {
         <div className="container">
           <Route path="/login" component={Login}/>
           <Route path="/register" component={SignUp}/>
+          <Route path="/project" component={Projects}/>
           <Route exact path="/" render={() => ( 
               this.state.auth.isLoggedIn ? <Dashboard /> : <Home /> 
             )
