@@ -19,7 +19,11 @@ export default class MyProjects extends React.Component {
 
     }
     componentDidMount() {
-        const userId = firebase.auth().currentUser.uid;
+        const user = firebase.auth().currentUser;
+        if(!user) {
+            return;
+        }
+        const userId = user.uid;
         firebase.firestore().collection("projects").where('userID', '==', userId).get().then((querySnapshot) => {
             console.log('done',querySnapshot);
             const projects = [];
