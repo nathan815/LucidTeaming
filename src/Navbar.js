@@ -12,7 +12,7 @@ class Navbar extends React.Component {
        <nav>
         <div className="nav-wrapper light-blue darken-4">
           <div className="container">
-            <Link to="/" className="left brand-logo">Team Me Up, Scotty!</Link>
+            <Link to="/" className="left brand-logo">Lucid Teaming</Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               {
                 this.props.auth.isLoggedIn
