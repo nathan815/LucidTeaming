@@ -1,4 +1,5 @@
-nav .nav-wrapper {
+#navbar {
+  margin-bottom: 20px;
 }
 nav .brand-logo {
   position: static;

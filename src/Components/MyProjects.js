@@ -27,8 +27,8 @@ export default class MyProjects extends React.Component {
                             {
                                 this.state.projects.length
                                 ?
-                                    this.state.projects.map(project => {
-                                        return <Link to="/project" key={`${project.name}-${project.createdAt}`}>{project.name}</Link>
+                                    this.state.projects.map((project, key) => {
+                                        return <Link to="/project" key={key}>{project.name}</Link>
                                     })
                                 :
                                     <p>You don't have any projects!</p> //TODO: proper message or something.

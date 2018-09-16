@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { NavItem } from 'react-materialize';
 import './css/navbar.css';
 
 class Navbar extends React.Component {
@@ -8,8 +9,9 @@ class Navbar extends React.Component {
     this.props.logout();
   }
   render() {
+    const userId = this.props.auth.user && this.props.auth.user.uid;
     return (
-       <nav>
+       <nav id="navbar">
         <div className="nav-wrapper light-blue darken-4">
           <div className="container">
             <Link to="/" className="left brand-logo">Lucid Teaming</Link>
@@ -20,11 +22,11 @@ class Navbar extends React.Component {
                   <React.Fragment>
                     <li><Link to="/">Dashboard</Link></li>
                     <li><Link to="/messages">Messages</Link></li>
+                    <li><Link to={`/users/${userId}`}>My Profile</Link></li>
                     <li><a onClick={(e)=>this.logout(e)}>Logout</a></li>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <li><Link to="/">Home</Link></li>
                     <li><Link to="/login">Login</Link></li>
                     <li><Link to="/register">Sign Up</Link></li>
                   </React.Fragment>

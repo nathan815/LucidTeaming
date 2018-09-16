@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Row, Button} from 'react-materialize';
+import { Input, Row, Button, Card } from 'react-materialize';
 import {Redirect} from 'react-router-dom';
 import firebase from '../firebase';
 
@@ -25,11 +25,11 @@ export default class Welcome extends React.Component {
     ];
 
     this.state = {
-      age: 13,
+      age: '',
       registered: false
     };
 
-    this.selectedLanagages = [];
+    this.selectedLanguages = [];
 
     this.onSubmit = async e => {
       e.preventDefault();
@@ -41,10 +41,10 @@ export default class Welcome extends React.Component {
       }
 
       try {
-        await userData.set({
+        await userData.update({
           email: firebase.auth().currentUser.email,
           age: this.state.age,
-          languages: this.selectedLanagages
+          languages: this.selectedLanguages
         });
       } catch (error) {
         //Error with adding data.
@@ -64,13 +64,13 @@ export default class Welcome extends React.Component {
     if (this.state.registered) return <Redirect to="/" />
 
     return (
-      <div>
+      <Card>
         
         <h4>Welcome!</h4>
         <p>We'd love to hook you up with some other developers! But first, we'll need to know a bit more about you!</p>
         <form className="col s12 auth-form" onSubmit={this.onSubmit}>
           <Row>
-            <Input label="How old are you?" type="number" value={this.state.age} onChange={(e) => this.setState({age: Number(e.target.value) > 0 ? Number(e.target.value) : 0})} required/>
+            <Input label="How old are you?" type="number" value={this.state.age} onChange={(e) => this.setState({age: parseInt(e.target.value) })} required />
           </Row>
 
           <Row>
@@ -79,9 +79,9 @@ export default class Welcome extends React.Component {
 
               <div className="col s12 m6">
                 <p>
-                  {this.languages.slice(Math.floor(this.languages.length / 2)).map(lang => (
-                    <label>
-                      <input type="checkbox" id={`language-${lang}`} onClick={(e) => e.target.checked ? this.selectedLanagages.push(e.target.id.slice(9)) : this.selectedLanagages.splice(this.selectedLanagages.indexOf(e.target.id.slice(9)), 1)}/>
+                  {this.languages.slice(0, Math.floor(this.languages.length / 2)).map(lang => (
+                    <label key={lang}>
+                      <input type="checkbox" id={`language-${lang}`} onClick={(e) => e.target.checked ? this.selectedLanguages.push(e.target.id.slice(9)) : this.selectedLanguages.splice(this.selectedLanguages.indexOf(e.target.id.slice(9)), 1)}/>
                       <span>{lang}</span>
                       <br />
                     </label>
@@ -91,9 +91,9 @@ export default class Welcome extends React.Component {
 
               <div className="col s12 m6">
                 <p>
-                  {this.languages.slice(0, Math.floor(this.languages.length / 2)).map(lang => (
-                    <label>
-                      <input type="checkbox" id={`language-${lang}`} onClick={(e) => e.target.checked ? this.selectedLanagages.push(e.target.id.slice(9)) : this.selectedLanagages.splice(this.selectedLanagages.indexOf(e.target.id.slice(9)), 1)}/>
+                  {this.languages.slice(Math.floor(this.languages.length / 2)).map((lang) => (
+                    <label key={lang}>
+                      <input type="checkbox" id={`language-${lang}`} onClick={(e) => e.target.checked ? this.selectedLanguages.push(e.target.id.slice(9)) : this.selectedLanguages.splice(this.selectedLanguages.indexOf(e.target.id.slice(9)), 1)}/>
                       <span>{lang}</span>
                       <br />
                     </label>
@@ -108,7 +108,7 @@ export default class Welcome extends React.Component {
           <Button>Continue</Button>
         </form>
 
-      </div>
+      </Card>
     );
   }
 }
