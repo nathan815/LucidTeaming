@@ -13,10 +13,12 @@ export default class MyProjects extends React.Component {
 
         const userDataDB = firebase.database.collection("userData");
         if (!userDataDB) return;
-        userDataDB.get().then(({docs}) => {
-            const data = docs.map(doc => doc.data());
-            if (!data.find(({email}) => email === firebase.auth().currentUser.email)) this.setState({redirect: true});
-        });
+        const data = userDataDB.doc(firebase.auth().currentUser.uid);
+        if (!data.languages || data.age === undefined) {
+            return this.setState({
+                redirect: true
+            });
+        }
     }
 
     render () {

@@ -11,6 +11,8 @@ import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
 import CreateProject from './pages/CreateProject';
 import UserProfile from './pages/UserProfile';
+import Projects from "./pages/subdash/projects" 
+import PrjView from './pages/subdash/projectview'
 
 import './css/App.css';
 
@@ -79,6 +81,7 @@ class App extends Component {
         <div className="container">
           <PrivateRoute path="/welcome" component={Welcome} />
           <PrivateRoute path="/project" component={CreateProject}/>
+          <Route path="/projects/:id" component={PrjView}/>
           <GuestRoute path="/login" component={Login} />
           <GuestRoute path="/register" component={SignUp} />
           <Route exact path="/" render={() => ( 

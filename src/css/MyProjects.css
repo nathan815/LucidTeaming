@@ -2,3 +2,7 @@
     max-width: 25%;
     min-width: 25%;
 }
+
+#projectCreateFooter {
+    padding-right: 5px;
+}
