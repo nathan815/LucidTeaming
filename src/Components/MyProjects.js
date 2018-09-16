@@ -19,28 +19,37 @@ export default class MyProjects extends React.Component {
 
     }
     componentDidMount() {
-        const user = firebase.auth().currentUser;
-        if(!user) {
-            return;
-        }
         const userId = user.uid;
-        firebase.firestore().collection("projects").where('userID', '==', userId).get().then((querySnapshot) => {
-            console.log('done',querySnapshot);
+        firebase.database.collection("projects").where('userID', '==', userId).get().then((querySnapshot) => {
             const projects = [];
+            let users = [];
             querySnapshot.forEach((doc) => {
-                console.log(doc)
                 //const myProjects = docs.filter(doc => doc.userId === firebase.auth().currentUser.uid); //Unttested as I don't have the add project code.
                 projects.push({ ...doc.data(), ...{ id: doc.id } });
                 //console.log(myProjects);
                 //Let's find people with similar skills and see their projects.
-                firebase.database.collection("userData").get().then(({docs: userDataDocs}) => {
-                    //Not sure how efficient it would be, but my train of thought was that I would get userdata, find people with similar skills, get the top 5 user's projects, and display them for recommended.
-                });
+            });
+
+            //Get our data.
+            firebase.database.collection("userData").where('email', '==', firebase.auth().currentUser.email).get().then(async ({docs: userDataDocs}) => {
+                const doc = userDataDocs[0];
+                if (!doc) return;
+                const myData = doc.data();
+                //Ok, we have our data, now we need to compare that against a unch of other people.
+
+                //We have to load ALL in memory because we don't know which users to pick exactly and firebase's array includes functionality is not there.
+                const topUsers = (await firebase.database.collection("userData").get()).docs.map(doc => doc.data()).map(({languages, email}) => {return {languages, email}}).sort((uA, uB) => {
+                    const instancesA = uA.languages.filter(lang => myData.languages.includes(lang)).length;
+                    const instancesB = uB.languages.filter(lang => myData.languages.includes(lang)).length;
+                    return instancesB > instancesA;
+                }).slice(0, 10);
+                console.log(topUsers);
+                const topUserProjects = [];
+
             });
             this.setState({
                 projects: projects
             });
-            console.log(this.state);
         }).catch(console.error);
     }
 
