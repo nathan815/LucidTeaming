@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
 import { Route, withRouter } from 'react-router-dom';
 
@@ -60,6 +61,7 @@ class App extends Component {
         <div className="container">
           <Route path="/login" component={Login}/>
           <Route path="/register" component={SignUp}/>
+          <Route path="/welcome" component={Welcome}/>
           <Route exact path="/" render={() => ( 
               this.state.auth.isLoggedIn ? <Dashboard /> : <Home /> 
             )

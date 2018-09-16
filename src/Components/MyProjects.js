@@ -19,15 +19,23 @@ export default class MyProjects extends React.Component {
     }
 
     render () {
-        //Honestly I really think I should be putting this in a card, the MyProjects component should have an addProject button as well.
         return (
-            (
-                this.state.projects.length
-                ?
-                    <p>You have some projects.</p> //TODO: display projects, requires creation of projects.
-                :
-                    <p>You don't have any projects!</p> //TODO: proper message or something.
-            )
+            <div className="row">
+                <div className="col s12 m6">
+                    <div className="card darken-1 left">
+                        <div className="card-content">
+                            <span className="card-title">Projects</span>
+                            {
+                                !this.state.projects.length
+                                ?
+                                    <p>You have some projects.</p> //TODO: display projects, requires creation of projects.
+                                :
+                                    <p>You don't have any projects!</p> //TODO: proper message or something.
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 }
