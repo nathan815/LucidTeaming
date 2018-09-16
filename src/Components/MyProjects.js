@@ -20,7 +20,8 @@ export default class MyProjects extends React.Component {
     }
     componentDidMount() {
         const userId = firebase.auth().currentUser.uid;
-        firebase.firestore().collection("projects").where('userId','==',userId).get().then((querySnapshot) => {
+        firebase.firestore().collection("projects").where('userID', '==', userId).get().then((querySnapshot) => {
+            console.log('done',querySnapshot);
             querySnapshot.forEach((doc) => {
                 console.log(doc)
                 //const myProjects = docs.filter(doc => doc.userId === firebase.auth().currentUser.uid); //Unttested as I don't have the add project code.

@@ -20,7 +20,7 @@ class Projects extends React.Component {
                 tech: [],
                 majors: []
             }
-        }
+
 
         onSubmit = (e)=>{
             e.preventDefault();
@@ -51,6 +51,7 @@ class Projects extends React.Component {
                 </div>
                 )
             }
-        }
+    
 
-        export default Projects
+
+export default CreateProject;
