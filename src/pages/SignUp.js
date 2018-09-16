@@ -44,18 +44,15 @@ class SignUpForm extends React.Component {
         }
       });
     }
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password,)
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(authUser => {
-        firebase.auth().currentUser.updateProfile({
-          displayName: `${this.state.firstName} ${this.state.lastName}`
-        }).then(() => {
-          this.setState({ ...INITIAL_STATE });
-          this.props.history.push('/');
-        }).catch(error => {
-          this.setState({
-            error
-          });
+        return firebase.firestore().collection('userData').doc(authUser.uid).set({
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
         });
+      })
+      .then(() => {
+        this.props.history.push('/');
       })
       .catch(error => {
         this.setState({

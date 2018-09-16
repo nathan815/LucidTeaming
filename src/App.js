@@ -9,6 +9,8 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
+import CreateProject from './pages/CreateProject';
+import UserProfile from './pages/UserProfile';
 import Projects from "./pages/subdash/projects" 
 import PrjView from './pages/subdash/projectview'
 
@@ -78,14 +80,14 @@ class App extends Component {
         <Navbar auth={this.state.auth} logout={this.logout} />
         <div className="container">
           <PrivateRoute path="/welcome" component={Welcome} />
-          <PrivateRoute path="/project" component={Projects}/>
+          <PrivateRoute path="/project" component={CreateProject}/>
           <Route path="/projects/:id" component={PrjView}/>
           <GuestRoute path="/login" component={Login} />
           <GuestRoute path="/register" component={SignUp} />
           <Route exact path="/" render={() => ( 
             this.state.auth.isLoggedIn ? <Dashboard /> : <Home /> 
-          )
-          } />
+          )} />
+          <Route path="/users/:id" component={UserProfile} />
         </div>
       </div>
     );

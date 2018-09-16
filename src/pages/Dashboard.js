@@ -9,7 +9,6 @@ export default class Dashboard extends React.Component {
         	<div class="card">
                 <MyProjects />
                 <RecommendedProjects />
-                <Welcome />
             </div>
         );
     }
