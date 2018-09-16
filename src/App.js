@@ -10,6 +10,8 @@ import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
 
+import './css/App.css';
+
 const GuestRoute = ({ component: Component, ...restProps }) => (
   <Route {...restProps} render={(props) => (
     firebase.auth().currentUser
