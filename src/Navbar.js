@@ -21,7 +21,6 @@ class Navbar extends React.Component {
                 ? (
                   <React.Fragment>
                     <li><Link to="/">Dashboard</Link></li>
-                    <li><Link to="/messages">Messages</Link></li>
                     <li><Link to={`/users/${userId}`}>My Profile</Link></li>
                     <li><a onClick={(e)=>this.logout(e)}>Logout</a></li>
                   </React.Fragment>
