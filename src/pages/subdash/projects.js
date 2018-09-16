@@ -7,6 +7,9 @@ import {
     Row
 } from 'react-materialize'
 import { Link } from 'react-router-dom'
+import firebase from '../../firebase'
+
+const db = firebase.database.collection("projects");
 
 class Projects extends React.Component {
 		constructor(props){
@@ -22,6 +25,10 @@ class Projects extends React.Component {
 		onSubmit = (e)=>{
 			e.preventDefault();
 			console.log(this.state);
+			const {description, title, tech, majors} = this.state
+			const userID = firebase.auth().currentUser.uid
+			db.add({userID, description, title, tech, majors});
+			console.log({userID, description, title, tech, majors})
 		}
 
         render() {
