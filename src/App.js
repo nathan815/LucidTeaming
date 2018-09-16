@@ -75,7 +75,7 @@ class App extends Component {
       <div className="App">
         <Navbar auth={this.state.auth} logout={this.logout} />
         <div className="container">
-          <PrivateRoute path="/welcome" component={Welcome}/>
+          <PrivateRoute path="/welcome" component={Welcome} />
           <GuestRoute path="/login" component={Login} />
           <GuestRoute path="/register" component={SignUp} />
           <Route exact path="/" render={() => ( 
