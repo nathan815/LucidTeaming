@@ -49,6 +49,7 @@ class SignUpForm extends React.Component {
         return firebase.firestore().collection('userData').doc(authUser.uid).set({
           firstName: this.state.firstName,
           lastName: this.state.lastName,
+          id: firebase.auth().uid
         });
       })
       .then(() => {

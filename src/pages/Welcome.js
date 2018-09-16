@@ -25,7 +25,7 @@ export default class Welcome extends React.Component {
     ];
 
     this.state = {
-      age: '',
+      age: '0',
       registered: false
     };
 
@@ -35,17 +35,25 @@ export default class Welcome extends React.Component {
       e.preventDefault();
       const userId = firebase.auth().currentUser.uid;
       const userData = firebase.firestore().collection('userData').doc(userId);
+      console.log(userData);
 
       if(userData.languages && userData.age) {
         return;
       }
 
       try {
-        await userData.update({
+
+        await userData.delete();
+        await firebase.firestore().collection('userData').doc(userId).set(Object.assign(userData.data(), {
           email: firebase.auth().currentUser.email,
           age: this.state.age,
           languages: this.selectedLanguages
-        });
+        }));
+        // await userData.update({
+        //   email: firebase.auth().currentUser.email,
+        //   age: this.state.age,
+        //   languages: this.selectedLanguages
+        // });
       } catch (error) {
         //Error with adding data.
         return alert(error);
