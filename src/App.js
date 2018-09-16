@@ -11,7 +11,6 @@ import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
 import CreateProject from './pages/CreateProject';
 import UserProfile from './pages/UserProfile';
-import Projects from "./pages/subdash/projects" 
 import PrjView from './pages/subdash/projectview'
 
 import './css/App.css';
