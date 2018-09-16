@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
+import Projects from "./pages/subdash/projects" 
 
 import './css/App.css';
 
@@ -76,6 +77,7 @@ class App extends Component {
         <Navbar auth={this.state.auth} logout={this.logout} />
         <div className="container">
           <PrivateRoute path="/welcome" component={Welcome} />
+          <PrivateRoute path="/project" component={Projects}/>
           <GuestRoute path="/login" component={Login} />
           <GuestRoute path="/register" component={SignUp} />
           <Route exact path="/" render={() => ( 
