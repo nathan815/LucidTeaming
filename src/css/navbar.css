@@ -2,4 +2,5 @@ nav .nav-wrapper {
 }
 nav .brand-logo {
   position: static;
+  font-family: 'Amatic SC', sans-serif;
 }
