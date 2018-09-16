@@ -34,12 +34,14 @@ export default class PrjView extends React.Component {
     render() {
         return (
         	<Row>
-        	<div className="col s12 m6">
-        	<div className="card darken-1 left">
-        	<div className="card-content">
-        		<h1 className="card-title">{this.state.projectData.title}</h1></div>
-        	</div>
-        	</div>
+	        	<div className="col s12 m6">
+    	    		<div className="card darken-1 left">
+        				<div className="card-content">
+        					<h1 className="card-title">{this.state.projectData.title}</h1>
+
+        				</div>
+        			</div>
+    			</div>
         	</Row>
         )
     }

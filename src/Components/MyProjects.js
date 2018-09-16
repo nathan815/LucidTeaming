@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from '../firebase';
 import "../css/MyProjects.css";
-import {Modal, Button} from 'react-materialize';
+import {Modal, Button, Row} from 'react-materialize';
 import { Link } from 'react-router-dom';
 import Project from './Project';
 
@@ -14,22 +14,31 @@ export default class MyProjects extends React.Component {
             recommendedProjects: []
         };
 
-        firebase.database.collection("projects").get().then(({docs}) => {
-            const myProjects = docs.filter(doc => doc.id === firebase.auth().currentUser.uid); //Unttested as I don't have the add project code.
-            this.setState({
-                projects: myProjects
-            });
-            //Let's find people with similar skills and see their projects.
-            firebase.database.collection("userData").get().then(({docs: userDataDocs}) => {
-                //Not sure how efficient it would be, but my train of thought was that I would get userdata, find people with similar skills, get the top 5 user's projects, and display them for recommended.
+        
+
+
+    }
+    componentDidMount() {
+        const userId = firebase.auth().currentUser.uid;
+        firebase.firestore().collection("projects").where('userId','==',userId).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                console.log(doc)
+                //const myProjects = docs.filter(doc => doc.userId === firebase.auth().currentUser.uid); //Unttested as I don't have the add project code.
+                this.setState({
+                    projects: [ ...this.state.projects, ...doc ]
+                });
+                //console.log(myProjects);
+                //Let's find people with similar skills and see their projects.
+                firebase.database.collection("userData").get().then(({docs: userDataDocs}) => {
+                    //Not sure how efficient it would be, but my train of thought was that I would get userdata, find people with similar skills, get the top 5 user's projects, and display them for recommended.
+                });
             });
         }).catch(console.error);
-
-
     }
 
     render () {
         return (
+                
                     <div className="row">
                         <div className="col s12 m6">
                             <div className="card darken-1">
@@ -69,8 +78,8 @@ export default class MyProjects extends React.Component {
                                 </div>
                             </div>
                         </div>
-
                     </div>
+                    
         );
     }
 }

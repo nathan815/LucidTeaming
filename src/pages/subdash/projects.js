@@ -27,7 +27,9 @@ class Projects extends React.Component {
 			console.log(this.state);
 			const {description, title, tech, majors} = this.state
 			const userID = firebase.auth().currentUser.uid
-			db.add({userID, description, title, tech, majors});
+			db.add({userID, description, title, tech, majors}).then((d)=>{
+				console.log(d.id);
+			})
 			console.log({userID, description, title, tech, majors})
 		}
 
@@ -44,7 +46,7 @@ class Projects extends React.Component {
             	<Input id="techbox" type="text" label="tech" s={6} value={this.state.tech} onChange={(e) => this.setState({tech: e.target.value })} />
             	<Input id="majbox" type="text" label="maj" s={6} value={this.state.majors} onChange={(e) => this.setState({majors: e.target.value })} />
             	</Row>
-            	<Button className="waves-effect waves-light btn-large cardFix">Login</Button>
+            	<Button className="waves-effect waves-light btn-large cardFix">Done</Button>
             	</form>
             	</div>
                 )
