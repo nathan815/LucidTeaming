@@ -38,9 +38,9 @@ class Login extends React.Component {
 			<form className="col s12 auth-form" onSubmit={this.onSubmit}>
 				<Row>
 					
-					<Input id="firstName" type="text" label="Email Address" s={6} value={this.state.email} 
+					<Input type="text" label="Email Address" s={6} value={this.state.email} 
 										onChange={(e) => this.setState({ email: e.target.value })} />
-					<Input id="lastName" type="text" label="Password" s={6} value={this.state.password} 
+					<Input type="password" label="Password" s={6} value={this.state.password} 
 										onChange={(e) => this.setState({password: e.target.value })} />
 
 					<div className="col s6"><Button className="btn-large">Login</Button></div>
