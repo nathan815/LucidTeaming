@@ -79,7 +79,7 @@ class App extends Component {
           <Route exact path="/" render={() => ( 
             this.state.auth.isLoggedIn ? <Dashboard /> : <Home /> 
           )
-          }></Route>
+          } />
         </div>
       </div>
     );
