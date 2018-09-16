@@ -17,14 +17,16 @@ class Projects extends React.Component {
             this.state={
                 description: "",
                 title: "",
-                tech: "",
-                majors: ""
+                tech: [],
+                majors: []
             }
         }
 
         onSubmit = (e)=>{
             e.preventDefault();
             console.log(this.state);
+            this.state.tech = this.state.tech.split(",");
+            this.state.majors = this.state.majors.split(",");
             const {description, title, tech, majors} = this.state
             const userID = firebase.auth().currentUser.uid
             db.add({userID, description, title, tech, majors});
@@ -37,12 +39,12 @@ class Projects extends React.Component {
                 <form onSubmit={this.onSubmit}>
                 <h1>Create Project</h1>
                 <Row>
-                <Input id="titlebox" type="text" label="title" s={6} value={this.state.title} onChange={(e) => this.setState({title: e.target.value })} />
-                <Input id="descbox" type="text" label="desx" s={6} value={this.state.description} onChange={(e) => this.setState({description: e.target.value })} />
+                <Input id="titlebox" type="text" label="What is the name of your project?" s={6} value={this.state.title} onChange={(e) => this.setState({title: e.target.value })} />
+                <Input id="descbox" type="text" label="Give a short description of it." s={6} value={this.state.description} onChange={(e) => this.setState({description: e.target.value })} />
                 </Row>
                 <Row>
-                <Input id="techbox" type="text" label="tech" s={6} value={this.state.tech} onChange={(e) => this.setState({tech: e.target.value })} />
-                <Input id="majbox" type="text" label="maj" s={6} value={this.state.majors} onChange={(e) => this.setState({majors: e.target.value })} />
+                <Input id="techbox" type="text" label="What technologies will you be using?" s={6} value={this.state.tech} onChange={(e) => this.setState({tech: e.target.value })} />
+                <Input id="majbox" type="text" label="What certifications are you looking for?" s={6} value={this.state.majors} onChange={(e) => this.setState({majors: e.target.value })} />
                 </Row>
                 <Button className="waves-effect waves-light btn-large cardFix">Login</Button>
                 </form>
