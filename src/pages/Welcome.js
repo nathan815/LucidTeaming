@@ -31,39 +31,44 @@ export default class Welcome extends React.Component {
 
     this.selectedLanguages = [];
 
-    this.onSubmit = async e => {
-      e.preventDefault();
-      const userId = firebase.auth().currentUser.uid;
-      const userData = firebase.firestore().collection('userData').doc(userId);
-      console.log(userData);
+  }
 
-      if(userData.languages && userData.age) {
-        return;
+  componentDidMount() {
+    const userId = firebase.auth().currentUser.uid;
+    firebase.firestore().collection('userData').doc(userId).get().then(snapshot => {
+      const userData = snapshot.data();
+      if(userData && userData.languages && userData.age) {
+        this.setState({
+          registered: true
+        });
       }
+    })
+  }
 
-      try {
+  onSubmit = async e => {
+    e.preventDefault();
+    const userId = firebase.auth().currentUser.uid;
+    const userData = firebase.firestore().collection('userData').doc(userId);
+    console.log(userData);
 
-        await userData.delete();
-        await firebase.firestore().collection('userData').doc(userId).set(Object.assign(userData.data(), {
-          email: firebase.auth().currentUser.email,
-          age: this.state.age,
-          languages: this.selectedLanguages
-        }));
-        // await userData.update({
-        //   email: firebase.auth().currentUser.email,
-        //   age: this.state.age,
-        //   languages: this.selectedLanguages
-        // });
-      } catch (error) {
-        //Error with adding data.
-        return alert(error);
-      }
-
-      this.setState({
-        registered: true
+    try {
+      // await firebase.firestore().collection('userData').doc(userId).set(Object.assign(userData.data(), {
+      //   email: firebase.auth().currentUser.email,
+      //   age: this.state.age,
+      //   languages: this.selectedLanguages
+      // }));
+      await userData.set({
+        age: this.state.age,
+        languages: this.selectedLanguages
       });
+    } catch (error) {
+      //Error with adding data.
+      return alert(error);
+    }
 
-    };
+    this.setState({
+      registered: true
+    });
 
   }
 

@@ -6,7 +6,7 @@ import {
     Input,
     Row
 } from 'react-materialize'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import firebase from '../firebase'
 
 const db = firebase.database.collection("projects");
@@ -22,15 +22,15 @@ class Projects extends React.Component {
             }
         }        
 
-        onSubmit = (e)=>{
+        onSubmit = async (e)=>{
             e.preventDefault();
             console.log(this.state);
             this.state.tech = this.state.tech.split(",");
             this.state.majors = this.state.majors.split(",");
             const {description, title, tech, majors} = this.state
             const userID = firebase.auth().currentUser.uid
-            db.add({userID, description, title, tech, majors});
-            console.log({userID, description, title, tech, majors})
+            await db.add({userID, description, title, tech, majors});
+            this.props.history.push('/');
         }
 
         render() {
@@ -46,7 +46,7 @@ class Projects extends React.Component {
                 <Input id="techbox" type="text" label="What technologies will you be using?" s={6} value={this.state.tech} onChange={(e) => this.setState({tech: e.target.value })} />
                 <Input id="majbox" type="text" label="What certifications are you looking for?" s={6} value={this.state.majors} onChange={(e) => this.setState({majors: e.target.value })} />
                 </Row>
-                <Button className="waves-effect waves-light btn-large cardFix">Login</Button>
+                <Button className="waves-effect waves-light btn-large cardFix">Create Project</Button>
                 </form>
                 </div>
                 )
@@ -55,4 +55,4 @@ class Projects extends React.Component {
     
 
 
-export default Projects;
+export default withRouter(Projects);

@@ -42,13 +42,7 @@ export default class MyProjects extends React.Component {
                 //Ok, we have our data, now we need to compare that against a unch of other people.
 
                 //We have to load ALL in memory because we don't know which users to pick exactly and firebase's array includes functionality is not there.
-                const topUsers = (await firebase.database.collection("userData").get()).docs.map(doc => doc.data()).map(({languages, email}) => {return {languages, email}}).sort((uA, uB) => {
-                    const instancesA = uA.languages.filter(lang => myData.languages.includes(lang)).length;
-                    const instancesB = uB.languages.filter(lang => myData.languages.includes(lang)).length;
-                    return instancesB > instancesA;
-                }).slice(0, 10);
-                console.log(topUsers);
-                const topUserProjects = [];
+            
 
             });
             this.setState({
